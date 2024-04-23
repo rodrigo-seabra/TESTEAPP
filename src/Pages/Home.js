@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Produto from '../Components/Produto'
 
@@ -24,6 +24,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
+            <Image source={require("../../assets/LogoAPP.png")} style={styles.img} />
       <Text style={styles.title}>Produtos</Text>
       {produtos.length > 0 ? <FlatList
         data={produtos}
@@ -54,16 +55,20 @@ const styles = StyleSheet.create({
     height: '100%',
     flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   title: {
     fontSize: 30,
-    marginBottom: 15,
+    marginLeft: 10,
     fontWeight: 'bold', // Make title bolder
     color: 'white',
   },
   lista: {
     width: "100%",
     display: "flex",
-}
+},
+  img: {
+  width: "95%",
+  height: "12%",
+},
 })
