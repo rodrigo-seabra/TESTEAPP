@@ -1,5 +1,4 @@
-import { View, Text, Image, StyleSheet, TouchableHighlight, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 
 function Rating({ rate, count }){
@@ -28,8 +27,6 @@ function Rating({ rate, count }){
     </View>
   );
 };
-
-
 export default function Produto({ title, price, category, image, rating }) {
     return (
         <View style={styles.box}>
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
     box: {
       width: '44%',
       height: 320,
-      backgroundColor: '#696969', // Light background example, adjust as needed
+      backgroundColor: '#696969', 
       borderRadius: 5,
       display: 'flex',
       alignItems: 'center',
@@ -83,7 +80,7 @@ const styles = StyleSheet.create({
     title: {
       fontSize: 12,
       textAlign: 'center',
-      fontWeight: 'bold', // Make title bolder
+      fontWeight: 'bold', 
       color: 'white',
     },
     price: {
@@ -103,12 +100,11 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       textAlign: 'center',
     },
-    productInfo: { // New style for category and data
+    productInfo: { 
       fontSize: 14,
-      color: '#00ff00', // Subdued gray for less prominence
+      color: '#00ff00', 
       fontStyle: "italic",
     },
-  
     image: {
       width: '100%',
       height: 150,

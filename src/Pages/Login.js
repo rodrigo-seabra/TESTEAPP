@@ -5,7 +5,6 @@ import { AuthContext } from '../Context/AuthContext';
 export default function LoginScreen() {
   const [email, setEmail] = useState();
   const [senha, setSenha] = useState();
-  const [erro, setErro] = useState(false);
 
   const { Login, error } = useContext(AuthContext);
 

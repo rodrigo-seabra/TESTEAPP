@@ -1,17 +1,28 @@
-import { View, Text, StyleSheet, TextInput, ActivityIndicator, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, TextInput, ActivityIndicator, Image, Animated } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import { AntDesign } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function Busca() {
+  const fade = useRef(new Animated.Value(0)).current;
 
+  useFocusEffect(
+    React.useCallback(() => {
+      fade.setValue(0)
+      Animated.timing(fade, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }).start();
+    }, [])
+  )
   const [usuarios, setUsuarios] = useState([])
   const [busca, setBusca] = useState('')
   const [error, setError] = useState(false)
   const [filtro, setFiltro] = useState()
-  const [exibir, setExibir] = useState()
 
   async function getUsuarios() {
     await fetch('https://fakestoreapi.com/users', {
@@ -32,39 +43,42 @@ export default function Busca() {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/LogoAPP.png")} style={styles.img} />
-      <View style={styles.searchContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Pesquisar..."
-          value={busca}
-          onChangeText={(digitado) => setBusca(digitado)}
-          placeholderTextColor="#fff"
-        />
-        <TouchableOpacity >
-          <AntDesign name="search1" size={24} color="#00ff00" style={styles.icon} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.titleBox}>
-        <Text style={styles.title}>Usuário</Text>
-      </View>
-      {busca !== '' && !filtro && (
-        <ActivityIndicator style={{ marginTop: 20 }} size="large" color="#00ff00" />
-      )}
-      {filtro && busca !== '' && (
-        <View style={styles.card}>
-          <FontAwesome name="user" size={54} color="white" style={styles.icon} />
-          <Text style={styles.userName}>{`${filtro.name.firstname} ${filtro.name.lastname}`}</Text>
-          <View style={styles.userInfoContainer}>
-            <FontAwesome name="phone" size={18} color="white" style={styles.icon} />
-            <Text style={styles.userInfo}>{`Telefone: ${filtro.phone}`}</Text>
-          </View>
-          <View style={styles.userInfoContainer}>
-            <FontAwesome name="map-marker" size={18} color="white" style={styles.icon} />
-            <Text style={styles.userInfo}>{`Localização: ${filtro.address.street}, ${filtro.address.city}`}</Text>
-          </View>
+      <Animated.View style={{opacity: fade, width: '100%', height:'100%'}}>
+        <Image source={require("../../assets/LogoAPP.png")} style={styles.img} />
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Pesquisar..."
+            value={busca}
+            onChangeText={(digitado) => setBusca(digitado)}
+            placeholderTextColor="#fff"
+          />
+          <TouchableOpacity >
+            <AntDesign name="search1" size={24} color="#00ff00" style={styles.icon} />
+          </TouchableOpacity>
         </View>
-      )}
+        <View style={styles.titleBox}>
+          <Text style={styles.title}>Usuário</Text>
+        </View>
+        {busca !== '' && !filtro && (
+          <ActivityIndicator style={{ marginTop: 20 }} size="large" color="#00ff00" />
+        )}
+        {filtro && busca !== '' && (
+          <View style={styles.card}>
+            <FontAwesome name="user" size={54} color="white" style={styles.icon} />
+            <Text style={styles.userName}>{`${filtro.name.firstname} ${filtro.name.lastname}`}</Text>
+            <View style={styles.userInfoContainer}>
+              <FontAwesome name="phone" size={18} color="white" style={styles.icon} />
+              <Text style={styles.userInfo}>{`Telefone: ${filtro.phone}`}</Text>
+            </View>
+            <View style={styles.userInfoContainer}>
+              <FontAwesome name="map-marker" size={18} color="white" style={styles.icon} />
+              <Text style={styles.userInfo}>{`Localização: ${filtro.address.street}, ${filtro.address.city}`}</Text>
+            </View>
+          </View>
+        )}
+      </Animated.View>
+
     </View>
   )
 }

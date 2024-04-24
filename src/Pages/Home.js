@@ -1,8 +1,22 @@
-import { View, Text, StyleSheet, ActivityIndicator, FlatList, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, ActivityIndicator, FlatList, Image, Animated } from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import Produto from '../Components/Produto'
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Home() {
+  const fade = useRef(new Animated.Value(0)).current;
+
+  useFocusEffect(
+      React.useCallback(() => {
+          fade.setValue(0)
+          Animated.timing(fade, {
+              toValue: 1,
+              duration: 1000,
+              useNativeDriver: true,
+          }).start();
+      }, [])
+  )
+
   const [produtos, setProdutos] = useState([])
   const [error, setError] = useState(false)
 
@@ -24,7 +38,9 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-            <Image source={require("../../assets/LogoAPP.png")} style={styles.img} />
+      <Animated.View style={{height:'100%', width:'100%', opacity:fade}}>
+        
+      <Image source={require("../../assets/LogoAPP.png")} style={styles.img} />
       <Text style={styles.title}>Produtos</Text>
       {produtos.length > 0 ? <FlatList
         data={produtos}
@@ -42,13 +58,14 @@ export default function Home() {
       /> :
         <ActivityIndicator size="large" color="#00ff00" />
       }
+            </Animated.View>
+
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 50,
     marginBottom: 30,
     backgroundColor: '#000',
     width: '100%',
@@ -60,7 +77,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     marginLeft: 10,
-    fontWeight: 'bold', // Make title bolder
+    fontWeight: 'bold', 
     color: 'white',
   },
   lista: {
@@ -69,6 +86,8 @@ const styles = StyleSheet.create({
 },
   img: {
   width: "95%",
-  height: "12%",
+  height: "20%",
+  marginTop: 25,
+
 },
 })

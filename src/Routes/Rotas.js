@@ -10,6 +10,8 @@ const Tab = createBottomTabNavigator();
 import Home from "../Pages/Home";
 import Busca from "../Pages/Busca";
 import Login from "../Pages/Login";
+import Inserir from '../Pages/Inserir';
+import Perfil from '../Pages/Perfil';
 
 
 
@@ -27,7 +29,7 @@ export default function Rotas() {
                 headerShown: false,
                 tabBarActiveTintColor: '#32CD32',
                 tabBarInactiveTintColor: 'white',
-                tabBarStyle: { backgroundColor: 'black', height:60},
+                tabBarStyle: { backgroundColor: 'black', height: 60 },
                 tabBarShowLabel: false,
             }}>
                 <Tab.Screen name="Home" component={Home} options={{
@@ -41,6 +43,20 @@ export default function Rotas() {
                         tabBarLabel: "Busca",
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="card-search-outline" color={color} size={40} />
+                        ),
+                    }} />
+                <Tab.Screen name="inserir" component={Inserir}
+                    options={{
+                        tabBarLabel: "Busca",
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialCommunityIcons name="plus-circle-multiple-outline" color={color} size={40} />
+                        ),
+                    }} />
+                <Tab.Screen name="Perfil" component={Perfil}
+                    options={{
+                        tabBarLabel: "Busca",
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialCommunityIcons name="account-cog-outline" color={color} size={40} />
                         ),
                     }} />
             </Tab.Navigator>
